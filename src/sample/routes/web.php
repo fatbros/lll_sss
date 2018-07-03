@@ -11,8 +11,10 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::pattern('url', '.*');
 
-Route::get('sample/react', 'SampleController@react');
+Route::get('/', 'WelcomeController');
+
+Route::get('vue/{url?}', 'VueController');
+
+Route::get('react/{url?}', 'ReactController');
