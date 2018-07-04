@@ -18,3 +18,5 @@ Route::get('/', 'WelcomeController');
 Route::get('vue/{url?}', 'VueController');
 
 Route::get('react/{url?}', 'ReactController');
+
+Route::resource('api', 'ApiController');

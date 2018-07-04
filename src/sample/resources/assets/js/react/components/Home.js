@@ -1,15 +1,15 @@
-import React, { Component } from 'react';
-import uniq from 'lodash/uniq';
-import { Link } from 'react-router-dom';
+import React, { Component } from 'react'
+import uniq from 'lodash/uniq'
+import { Link } from 'react-router-dom'
 
-import { connect } from 'react-redux';
-import { increment as incrementAction } from '../action';
+import { connect } from 'react-redux'
+import { increment as incrementAction, fetchData as fetchDataAction } from '../action'
 
 class Home extends Component {
     render() {
-        const { packages, count, increment } = this.props
+        const { packages, count, increment, fetchData, fetchedData } = this.props
 
-        const types = uniq(packages.map(p => p.type)).sort();
+        const types = uniq(packages.map(p => p.type)).sort()
 
         const listTypes = types.map((type, index) => (
             <Link
@@ -19,7 +19,7 @@ class Home extends Component {
             >
                 {type}
             </Link>
-        ));
+        ))
 
         return (
             <div>
@@ -31,27 +31,50 @@ class Home extends Component {
                         type.
                     </p>
                     <p>
-                        We&apos;re using react-router for this page so each package type has its own
+                        We&aposre using react-router for this page so each package type has its own
                         permalink, and will be prerendered on the server if visited directly.
                     </p>
                 </section>
                 <nav className="flex flex-wrap">{listTypes}</nav>
 
-                {/*  */}
-                <p>count: {count}</p>
-                <button onClick={increment}>INCREMENT_BUTTON</button>
+                {/* ======== */}
+                {/* SSRテスト */}
+                {/* ======== */}
+                <div>
+                    <p>count: {count}</p>
+                    <button onClick={increment}>INCREMENT_BUTTON</button>
+                </div>
+
+                <div>
+                    <button onClick={fetchData}>FETCH_DATA</button>
+                </div>
+
+                {/* apiからfetchした際に生成される */}
+                {fetchedData.map((value, index)=> {
+                    return (
+                        <ul key={index}>
+                            <li>{value.title}</li>
+                            <li>{value.name}</li>
+                            <li>{value.description}</li>
+                        </ul>
+                    )
+                })}
             </div>
-        );
+        )
     }
 }
 
 const mapStateToProps = state => ({
-    count: state.count
+    count: state.counter.count,
+    fetchedData: state.fetch.data
 })
 
 const mapDispatchToProps = dispatch => ({
     increment: () => {
         dispatch(incrementAction())
+    },
+    fetchData: () => {
+        dispatch(fetchDataAction())
     }
 })
 

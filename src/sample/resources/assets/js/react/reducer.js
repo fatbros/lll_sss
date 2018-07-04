@@ -1,8 +1,6 @@
-const initialState = {
-    count: 0
-}
+import { combineReducers } from 'redux'
 
-export default function reducer(state = initialState, action) {
+export function counter(state = {count: 0}, action) {
     switch(action.type) {
         case 'INCREMENT':
             return {
@@ -13,3 +11,17 @@ export default function reducer(state = initialState, action) {
             return state
     }
 }
+
+export const fetch = (state = {data: []}, action) => {
+    switch(action.type) {
+        case 'SET_FETCHED_DATA':
+            return {
+                ...state,
+                data: action.payload.data
+            }
+        default:
+            return state
+    }
+}
+
+export default combineReducers({ counter, fetch })
