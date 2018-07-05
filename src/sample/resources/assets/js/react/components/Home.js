@@ -6,6 +6,10 @@ import { connect } from 'react-redux'
 import { increment as incrementAction, fetchData as fetchDataAction } from '../action'
 
 class Home extends Component {
+    UNSAFE_componentWillMount() {
+        const { fetchData } = this.props
+        fetchData()
+    }
     render() {
         const { packages, count, increment, fetchData, fetchedData } = this.props
 

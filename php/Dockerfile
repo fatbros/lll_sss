@@ -27,7 +27,7 @@ RUN apt-get update \
     && docker-php-ext-install pdo_mysql pdo_pgsql
 
 # Install Node.js
-RUN curl -sL https://deb.nodesource.com/setup_6.x | bash - \
+RUN curl -sL https://deb.nodesource.com/setup_10.x | bash - \
     && apt-get update \
     && apt-get install -y nodejs
 
